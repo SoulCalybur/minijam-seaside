@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameModel : MonoBehaviour
 {
+    
     //public
     public static GameModel Instance { get; private set; }
     
@@ -20,6 +21,8 @@ public class GameModel : MonoBehaviour
     //private
 
     private int move_offset_ = 10;
+
+    private float move_speed_ = 10.0f;
 
     private EnemySpawnerModel e_spawn_model;
 
@@ -57,11 +60,18 @@ public class GameModel : MonoBehaviour
 
     }
 
-    public void spawnEnemy(Vector3 spawnposition)
-    { 
-        GameObject go = Instantiate(low, spawnposition, Quaternion.identity);
+    public void spawnEnemy(Vector3 spawnposition, 
+        EnemySpawnerModel.spawner_function e)
+    {
 
-        go.GetComponent<EnemyController>().
+
+
+
+        GameObject go = Instantiate(low, spawnposition, Quaternion.identity);
+        EnemyController ec = go.GetComponent<EnemyController>();
+        
+        ec.init_values(move_speed_);
+        ec.set_move_pattern(EnemyController.move_pettern.DIAGONAL);
+
     }
-    
 }

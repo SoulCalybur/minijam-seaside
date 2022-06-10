@@ -6,13 +6,11 @@ public class EnemySpawnerModel : MonoBehaviour
 {
     // Start is called before the first frame update
 
-
-
-
-    private Vector2Int base_position_;
+    private Vector3 base_position_;
     private int offset_;
     private bool[] canSpawn;
-
+    private int top_offset_ = 1;
+    private int bottom_offset_ = 1;
 
     public enum spawner_function
     {
@@ -30,8 +28,7 @@ public class EnemySpawnerModel : MonoBehaviour
 
     void Start()
     {
-        base_position_ = new Vector2Int(0, 0);
-
+        base_position_ = new Vector3(0, 0,0);
     }
 
     // Update is called once per frame
@@ -57,7 +54,7 @@ public class EnemySpawnerModel : MonoBehaviour
                 break;
             case spawner_function.UPDATEPOSITION:
 
-                base_position_ += Vector2Int.left * offset_;
+                base_position_ += Vector3.left * offset_;
                 break;
            
         }

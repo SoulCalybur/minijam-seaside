@@ -26,3 +26,5 @@ public class VerticalTower : BaseTower
 
 }
 
+//collision
+

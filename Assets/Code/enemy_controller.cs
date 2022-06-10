@@ -40,9 +40,7 @@ public class EnemyController : MonoBehaviour
         speed_ = 0;
         range_cd = 0;
         start_pos = new Vector3();
-        start_pos = this.transform.position;
-        //tile diagonal space 
-        //next_pos = start_pos + tds
+        change_target_to_move();
     }
 
     // Update is called once per frame
@@ -59,9 +57,7 @@ public class EnemyController : MonoBehaviour
                 if (delta_ >= 1)
                 {
                     delta_ = 0;
-                    start_pos = this.transform.position;
-                    //tile diagonal space 
-                    //next_pos = start_pos + tds
+                    change_target_to_move();
                 }
 
                 delta_ += Time.deltaTime;
@@ -82,17 +78,17 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void set_move_pattern(move_pettern e)
+    public void set_move_pattern(move_pettern e)
     {
         move_behavior = e;
     }
 
-    void set_attack_type(attack_type e)
+    public void set_attack_type(attack_type e)
     {
         attack_behavior = e;
     }
 
-    void init_values(float speed)
+    public void init_values(float speed)
     {
         speed_ = speed;
     }
@@ -109,4 +105,10 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    void change_target_to_move()
+    {
+        start_pos = this.transform.position;
+        //tile diagonal space 
+        //next_pos = start_pos + tds
+    }
 }
