@@ -37,7 +37,6 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         delta_ = 0;
-        speed_ = 0;
         range_cd = 0;
         start_pos = new Vector3();
         change_target_to_move();
@@ -46,36 +45,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (move_behavior != move_pettern.UNDEFINED)
-        {
-            if (move_behavior == move_pettern.STRAIGHT)
-            {
-                this.transform.position += Vector3.left * speed_ * Time.deltaTime;
-            }
-            else if (move_behavior == move_pettern.DIAGONAL)
-            {
-                if (delta_ >= 1)
-                {
-                    delta_ = 0;
-                    change_target_to_move();
-                }
-
-                delta_ += Time.deltaTime;
-
-                Vector3.Lerp(start_pos, next_pos, delta_);
-            }
-            else if (move_behavior == move_pettern.JUMPY)
-            {
-                this.transform.position += Vector3.left * speed_ * Time.deltaTime;
-
-                float result = (Random.value % 100);
-
-                if (result > 70)
-                {
-                    // Jump
-                }
-            }
-        }
+        process_move_behavior();
     }
 
     public void set_move_pattern(move_pettern e)
@@ -111,4 +81,41 @@ public class EnemyController : MonoBehaviour
         //tile diagonal space 
         //next_pos = start_pos + tds
     }
+
+    void process_move_behavior()
+    {
+        if (move_behavior != move_pettern.UNDEFINED)
+        {
+            if (move_behavior == move_pettern.STRAIGHT)
+            {
+                this.transform.position += Vector3.left * speed_ * Time.deltaTime;
+                
+                
+            }
+            else if (move_behavior == move_pettern.DIAGONAL)
+            {
+                if (delta_ >= 1)
+                {
+                    delta_ = 0;
+                    change_target_to_move();
+                }
+
+                delta_ += Time.deltaTime;
+
+                Vector3.Lerp(start_pos, next_pos, delta_);
+            }
+            else if (move_behavior == move_pettern.JUMPY)
+            {
+                this.transform.position += Vector3.left * speed_ * Time.deltaTime;
+
+                float result = (Random.value % 100);
+
+                if (result > 70)
+                {
+                    // Jump
+                }
+            }
+        }
+    }
+
 }
