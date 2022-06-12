@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
 
     private float animation_delta_ = 0.0f;
 
-    private float top_max = 4.5f;
+    private float top_max = 3.5f;
 
     private float bottom_max = -0.5f;
 
@@ -157,9 +157,9 @@ public class EnemyController : MonoBehaviour
 
                     if (Random.value > 0.5f)
                     {
-                        if (transform.position.y + jump_range * range_to_next_tile_center > top_max && is_jumpposition_free(jump_range,Vector3.down))
+                        if (transform.position.y + jump_range >= top_max && is_jumpposition_free(jump_range,Vector3.down))
                             next_pos.y -= jump_range;
-                        else if(is_jumpposition_free(jump_range + 2, Vector3.up))
+                        else if(transform.position.y - jump_range <= bottom_max && is_jumpposition_free(jump_range * 2, Vector3.up))
                             next_pos.y += jump_range;
                         else
                         {
@@ -169,9 +169,9 @@ public class EnemyController : MonoBehaviour
                     }
                     else
                     {
-                        if (transform.position.y - jump_range * range_to_next_tile_center > top_max && is_jumpposition_free(jump_range, Vector3.up))
+                        if (transform.position.y - jump_range <= bottom_max && is_jumpposition_free(jump_range, Vector3.up))
                             next_pos.y += jump_range;
-                        else if(is_jumpposition_free(jump_range, Vector3.down))
+                        else if(transform.position.y + jump_range >= top_max && is_jumpposition_free(jump_range, Vector3.down))
                             next_pos.y -= jump_range;
                         else
                         {
@@ -221,11 +221,13 @@ public class EnemyController : MonoBehaviour
     {
         RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, dir, length);
 
+       
+
         for(int index = 0; index < hit.Length;index++)
-            if (hit[index].collider.tag == "enemy" &&
+            if (hit[index].collider.tag == "Enemy" &&
                 Vector3.Distance(transform.position, hit[index].transform.position) >=length)
                 return false;
-
+ 
         return true;
     }
 }

@@ -50,7 +50,7 @@ namespace Assets.Code
                 av_positions.Add(lane);
 
                 Vector3 spawnpos = GameModel.Instance.transform.position + 
-                                   Vector3.up * (tile_size * lane);
+                                   (Vector3.up * (tile_size * lane));
 
                 if (GameModel.Instance != null)
                     GameModel.Instance.spawn_enemy(spawnpos, e);

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8244533894730687296}
   - component: {fileID: 1263389244110917977}
   - component: {fileID: 1709910827161310499}
+  - component: {fileID: -4938244483030702557}
   m_Layer: 0
   m_Name: tower2
   m_TagString: Untagged
@@ -71,6 +72,32 @@ MonoBehaviour:
   projectile: {fileID: 2281326597331816777, guid: 65698aadaaec0964f9e456bebf6f14c2, type: 3}
   projectile_spawn_transform: {fileID: 4729246827796664804}
   animator: {fileID: 0}
+--- !u!61 &-4938244483030702557
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185476786193075901}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &809767493669637132
 GameObject:
   m_ObjectHideFlags: 0
