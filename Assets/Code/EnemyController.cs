@@ -93,7 +93,11 @@ public class EnemyController : MonoBehaviour
         if (col.collider.tag == "Projectile")
         {
             Destroy(col.collider.gameObject);
-            Destroy(this.gameObject);
+
+            Animator enemyAnimator = GetComponent<Animator>();
+            if(enemyAnimator) {
+                enemyAnimator.SetTrigger("Die");
+            }
         }
         else if (col.collider.tag == "deathzone")
         {
@@ -229,5 +233,11 @@ public class EnemyController : MonoBehaviour
                 return false;
  
         return true;
+    }
+
+
+    void selfDestruct() {
+        // to be called from AnimationEvent in Death-Animation
+        Destroy(this.gameObject);
     }
 }
