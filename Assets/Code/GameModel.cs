@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.Rendering;
+using System.Collections.Generic;
 
 namespace Assets.Code
 {
     public class GameModel : MonoBehaviour
     {
-    
         //public
         public static GameModel Instance { get; private set; }
     
@@ -18,7 +19,7 @@ namespace Assets.Code
 
         public GameObject low;
 
-
+        private SortedSet<Vector3> blocked_position_gridspace;
         //private
 
         private int move_offset_ = 10;
@@ -27,11 +28,14 @@ namespace Assets.Code
 
         private float spawn_delta_ = 0.0f;
 
-        private int max_enemys_simultaneously = 4;
+        private int max_enemys_simultaneously = 10;
+
+        private float spawn_cooldown = 5f;
 
         private EnemySpawnerModel e_spawn_model;
 
         private CameraMovementModel c_movement_model;
+        
 
         private void Awake()
         {
@@ -63,7 +67,7 @@ namespace Assets.Code
         {
             spawn_delta_ += Time.deltaTime;
 
-            if (spawn_delta_ > 1f)
+            if (spawn_delta_ > spawn_cooldown)
             {
                 spawn_delta_ = 0.0f;
                 
@@ -73,14 +77,29 @@ namespace Assets.Code
             }
         }
 
-        public void spawnEnemy(Vector3 spawnposition, 
+        public void spawn_enemy(Vector3 spawnposition, 
             EnemySpawnerModel.spawner_function e)
         {
             GameObject go = Instantiate(low, spawnposition, Quaternion.identity);
             EnemyController ec = go.GetComponent<EnemyController>();
         
             ec.init_values(move_speed_);
-            ec.set_move_pattern(EnemyController.move_pettern.DIAGONAL);
+            ec.set_move_pattern(EnemyController.move_pettern.JUMPY);
+        }
+
+        public void spawn_grid_object(Vector3 spawnposition,GameObject prefab)
+        {
+            if (!blocked_position_gridspace.Contains(spawnposition))
+            {
+                blocked_position_gridspace.Add(spawnposition);
+                Instantiate(prefab, spawnposition, Quaternion.identity);
+            }
+        }
+
+        public void remove_object_from_grid(Vector3 position)
+        {
+            if(blocked_position_gridspace.Contains(position))
+            blocked_position_gridspace.Remove(position);
         }
     }
 }

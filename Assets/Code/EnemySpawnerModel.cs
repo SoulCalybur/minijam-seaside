@@ -53,7 +53,7 @@ namespace Assets.Code
                                    Vector3.up * (tile_size * lane);
 
                 if (GameModel.Instance != null)
-                    GameModel.Instance.spawnEnemy(spawnpos, e);
+                    GameModel.Instance.spawn_enemy(spawnpos, e);
             }
         }
         public void init_callback()

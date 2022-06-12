@@ -17,13 +17,6 @@ namespace Assets.Code
         private bool can_shoot = true;
 
         public GameObject projectile;
-        
-
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
 
         // Update is called once per frame
         void Update()
@@ -69,15 +62,11 @@ namespace Assets.Code
         {
             if (col.collider.tag == "Enemy")
             {
+                GameModel.Instance.remove_object_from_grid(this.transform.position);
                 Destroy(col.collider.gameObject);
                 Destroy(this.gameObject);
             }
             
-        }
-        void OnTriggerEnter2D(Collider2D col)
-        {
-            if (col.tag == "wave")
-                Destroy(this.gameObject);
         }
     }
 

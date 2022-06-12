@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
@@ -30,9 +31,17 @@ public class EnemyController : MonoBehaviour
 
     private float bottom_max = -4.25f;
 
-    private float range_cd;
+    private float range_to_next_tile_center = 0.5f;
+
+    private float jump_range = 0;
+
+    private float jump_cooldown = 10.0f;
+
+    private float jump_delta = 0.0f;
 
     private bool is_jumping = false;
+
+    private bool can_jump = false;
 
     private Vector3 start_pos;
 
@@ -99,7 +108,7 @@ public class EnemyController : MonoBehaviour
         //tile diagonal space 
         if (next_pos.y <= bottom_max || next_pos.y >= top_max)
             move_direction.y = -move_direction.y;
-        next_pos = start_pos + move_direction * 0.5f;
+        next_pos = start_pos + move_direction * range_to_next_tile_center;
     }
 
     void process_move_behavior()
@@ -126,11 +135,44 @@ public class EnemyController : MonoBehaviour
             }
             else if (move_behavior == move_pettern.JUMPY)
             {
-                if (Random.value > 0.7f)
+                if (can_jump && Random.value > 0.9f && !is_jumping)
                 {
                     is_jumping = true;
-                }
 
+                    jump_delta = 0.0f;
+                    can_jump = false;
+
+                    start_pos = transform.position;
+
+                    next_pos = transform.position;
+
+                    jump_range = 2 * range_to_next_tile_center;
+
+                    if (Random.value > 0.5f)
+                    {
+                        if (transform.position.y + jump_range * range_to_next_tile_center > top_max && is_jumpposition_free(jump_range,Vector3.down))
+                            next_pos.y -= jump_range;
+                        else if(is_jumpposition_free(jump_range + 2, Vector3.up))
+                            next_pos.y += jump_range;
+                        else
+                        {
+                            is_jumping = false;
+                            can_jump = true;
+                        }
+                    }
+                    else
+                    {
+                        if (transform.position.y - jump_range * range_to_next_tile_center > top_max && is_jumpposition_free(jump_range, Vector3.up))
+                            next_pos.y += jump_range;
+                        else if(is_jumpposition_free(jump_range, Vector3.down))
+                            next_pos.y -= jump_range;
+                        else
+                        {
+                            is_jumping = false;
+                            can_jump = true;
+                        }
+                    }
+                }
                 if (is_jumping)
                 {
                     if (delta_ >= 1)
@@ -149,16 +191,34 @@ public class EnemyController : MonoBehaviour
                         float ab = ((1f - delta_) * a) + (b * delta_);
                         float ac = ((1f - delta_) * a) + (c * delta_);
                         float abac = ((1f - delta_) * ab) + (ac * delta_);
-
                         transform.localScale = abac * Vector3.one;
+
+                        transform.position = Vector3.Lerp(start_pos, next_pos, delta_);
+
                     }
                 }
                 else
                 {
+                    if (jump_delta > jump_cooldown)
+                        can_jump = true;
+
+                    jump_delta += Time.deltaTime;
+
                     this.transform.position += Vector3.left * speed_ * Time.deltaTime;
                 }
             }
         }
     }
 
+    bool is_jumpposition_free(float length, Vector3 dir)
+    {
+        RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, dir, length);
+
+        for(int index = 0; index < hit.Length;index++)
+            if (hit[index].collider.tag == "enemy" &&
+                Vector3.Distance(transform.position, hit[index].transform.position) >=length)
+                return false;
+
+        return true;
+    }
 }
