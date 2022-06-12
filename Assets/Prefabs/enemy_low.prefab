@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4057920572660822907}
   - component: {fileID: 7842735732681045739}
   - component: {fileID: 1788080436127750308}
+  - component: {fileID: 1809551398458231551}
   m_Layer: 6
   m_Name: enemy_low
   m_TagString: Enemy
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -687636315, guid: 485607fa767c79d41b123888bc46117e, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,29 +101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
-  move:
-  - {fileID: 1813078846, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: -1091898488, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: 1738445790, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: -857815232, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: 1240350669, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: 608261781, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: -2052779749, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: 1022146164, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: 1420226611, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: -306998859, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: 345241428, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: -820356233, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: -987470690, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: -926715602, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: -1038148375, guid: 18b7c6dbfe9cb8d4d8ea2fd579a42921, type: 3}
-  - {fileID: 0}
-  dead:
-  - {fileID: -687636315, guid: 485607fa767c79d41b123888bc46117e, type: 3}
-  - {fileID: -1233646123, guid: 485607fa767c79d41b123888bc46117e, type: 3}
-  - {fileID: 1504256748, guid: 485607fa767c79d41b123888bc46117e, type: 3}
-  - {fileID: -1429558206, guid: 485607fa767c79d41b123888bc46117e, type: 3}
-  - {fileID: 390790557, guid: 485607fa767c79d41b123888bc46117e, type: 3}
   range_to_next_tile_center: 1
 --- !u!61 &7842735732681045739
 BoxCollider2D:
@@ -171,3 +149,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!95 &1809551398458231551
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520126741909562759}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0ff42e527261ea445b47ec25468ff48b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -9,8 +9,6 @@ using Random = UnityEngine.Random;
 public class EnemyController : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
-    public Sprite[] move;
-    public Sprite[] dead;
 
     public enum move_pettern
     {

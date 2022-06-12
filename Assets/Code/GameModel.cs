@@ -31,7 +31,7 @@ namespace Assets.Code
 
         private float spawn_delta_ = 0.0f;
 
-        private int max_enemys_simultaneously = 5;
+        private int max_enemys_simultaneously = 3;
 
         private float spawn_cooldown = 5f;
 
@@ -97,7 +97,7 @@ namespace Assets.Code
             EnemyController ec = go.GetComponent<EnemyController>();
         
             ec.init_values(move_speed_);
-            ec.set_move_pattern(EnemyController.move_pettern.DIAGONAL);
+            ec.set_move_pattern(EnemyController.move_pettern.STRAIGHT);
         }
 
         public void spawn_grid_object(Vector3 spawnposition,GameObject prefab)
