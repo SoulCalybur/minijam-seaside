@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Assets.Code
 {
@@ -8,13 +9,13 @@ namespace Assets.Code
 
         private Vector3 base_position_;
         private int offset_;
-        private bool[] canSpawn;
+        private SortedSet<int> av_positions;
 
         private int last_spawn_position;
         //used for offsetcalc
         private int lane_count = 10;
         private float tile_size = 0.5f;
-
+        
         public enum spawner_function
         {
             UPDATEPOSITION = 0,
@@ -28,6 +29,7 @@ namespace Assets.Code
         {
             offset_ = offset;
             base_position_ = base_position;
+            av_positions = new SortedSet<int>();
         }
         //spawner callback
         void update(spawner_function e)
@@ -37,11 +39,15 @@ namespace Assets.Code
             else 
             {
                 //randomize startposition on y axis
+                int lane;
+                while (true)
+                {
+                    lane =(int) (Random.value * lane_count);
+                    if (!av_positions.Contains(lane))
+                        break;
+                }
 
-                
-                int lane =(int) (Random.value * lane_count);
-
-                
+                av_positions.Add(lane);
 
                 Vector3 spawnpos = base_position_ + 
                                    Vector3.up * (tile_size * lane);
@@ -59,6 +65,9 @@ namespace Assets.Code
         {
             GameModel.spwn_cb -= update;
         }
-
+        public void reset_set()
+        {
+            av_positions.Clear();
+        }
     }
 }

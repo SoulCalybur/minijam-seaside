@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
@@ -22,26 +24,27 @@ public class EnemyController : MonoBehaviour
 
     private float speed_;
 
-    private float delta_;
+    private float delta_ = 0.0f;
+
+    private float top_max = 2.25f;
+
+    private float bottom_max = -4.25f;
 
     private float range_cd;
+
+    private bool is_jumping = false;
 
     private Vector3 start_pos;
 
     private Vector3 next_pos;
 
+    private Vector3 move_direction;
+
     private move_pettern move_behavior = move_pettern.UNDEFINED;
 
     private attack_type attack_behavior = attack_type.UNDEFINED;
     // Start is called before the first frame update
-    void Start()
-    {
-        delta_ = 0;
-        range_cd = 0;
-        start_pos = new Vector3();
-        change_target_to_move();
-    }
-
+ 
     // Update is called once per frame
     void Update()
     {
@@ -51,6 +54,14 @@ public class EnemyController : MonoBehaviour
     public void set_move_pattern(move_pettern e)
     {
         move_behavior = e;
+
+        if (e == move_pettern.DIAGONAL)
+        {
+            move_direction = new Vector3();
+            move_direction.x = -1;
+            move_direction.y = (Random.value > 0.5) ? -1 : 1;
+            change_target_to_move();
+        }
     }
 
     public void set_attack_type(attack_type e)
@@ -66,11 +77,18 @@ public class EnemyController : MonoBehaviour
     //should be used for melee attack
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("OnCollisionEnter2D");
+        if (col.collider.tag == "Projectile")
+        {
+            Debug.Log("destroy it");
+            Destroy(col.collider.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 
     void shoot_projectile()
     {
+
+
         //noch ueberarbeiten 
 
     }
@@ -79,7 +97,9 @@ public class EnemyController : MonoBehaviour
     {
         start_pos = this.transform.position;
         //tile diagonal space 
-        //next_pos = start_pos + tds
+        if (next_pos.y <= bottom_max || next_pos.y >= top_max)
+            move_direction.y = -move_direction.y;
+        next_pos = start_pos + move_direction * 0.5f;
     }
 
     void process_move_behavior()
@@ -101,18 +121,41 @@ public class EnemyController : MonoBehaviour
                 }
 
                 delta_ += Time.deltaTime;
-
-                Vector3.Lerp(start_pos, next_pos, delta_);
+                Debug.Log("start " + start_pos + " end " + next_pos);
+                this.transform.position = Vector3.Lerp(start_pos, next_pos, delta_);
             }
             else if (move_behavior == move_pettern.JUMPY)
             {
-                this.transform.position += Vector3.left * speed_ * Time.deltaTime;
-
-                float result = (Random.value % 100);
-
-                if (result > 70)
+                if (Random.value > 0.7f)
                 {
-                    // Jump
+                    is_jumping = true;
+                }
+
+                if (is_jumping)
+                {
+                    if (delta_ >= 1)
+                    {
+                        delta_ = 0;
+                        is_jumping = false;
+                    }
+                    else
+                    { 
+                        delta_ += Time.deltaTime;
+
+                        float a, b, c;
+                        a = c = 0.25f;
+                        b = 1;
+
+                        float ab = ((1f - delta_) * a) + (b * delta_);
+                        float ac = ((1f - delta_) * a) + (c * delta_);
+                        float abac = ((1f - delta_) * ab) + (ac * delta_);
+
+                        transform.localScale = abac * Vector3.one;
+                    }
+                }
+                else
+                {
+                    this.transform.position += Vector3.left * speed_ * Time.deltaTime;
                 }
             }
         }

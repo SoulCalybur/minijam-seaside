@@ -18,6 +18,7 @@ namespace Assets.Code
 
         public GameObject low;
 
+
         //private
 
         private int move_offset_ = 10;
@@ -25,6 +26,8 @@ namespace Assets.Code
         private float move_speed_ = 0.5f;
 
         private float spawn_delta_ = 0.0f;
+
+        private int max_enemys_simultaneously = 4;
 
         private EnemySpawnerModel e_spawn_model;
 
@@ -60,10 +63,13 @@ namespace Assets.Code
         {
             spawn_delta_ += Time.deltaTime;
 
-            if (spawn_delta_ > 5.0f)
+            if (spawn_delta_ > 1f)
             {
                 spawn_delta_ = 0.0f;
-                spwn_cb(EnemySpawnerModel.spawner_function.SPAWNLOW);
+                
+                for(int index = 0; index < max_enemys_simultaneously; index++)
+                    spwn_cb(EnemySpawnerModel.spawner_function.SPAWNLOW);
+                e_spawn_model.reset_set();
             }
         }
 
@@ -74,7 +80,7 @@ namespace Assets.Code
             EnemyController ec = go.GetComponent<EnemyController>();
         
             ec.init_values(move_speed_);
-            ec.set_move_pattern(EnemyController.move_pettern.STRAIGHT);
+            ec.set_move_pattern(EnemyController.move_pettern.DIAGONAL);
         }
     }
 }
