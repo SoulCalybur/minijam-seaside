@@ -53,13 +53,10 @@ public class PlayerActionHandler : MonoBehaviour
         }
 
         if (objInContact) {
-            inAction = true;
-            animator.SetBool("inAction", true);
-            Debug.Log(objInContact.tag);
-
-
-
-            StartCoroutine(Dig(3f));
+            //inAction = true;
+            //animator.SetBool("inAction", true);
+            //Debug.Log(objInContact.tag);
+            //StartCoroutine(Dig(3f));
         }
 
 
