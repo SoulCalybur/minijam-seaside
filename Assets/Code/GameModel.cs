@@ -19,7 +19,7 @@ namespace Assets.Code
 
         public GameObject low;
 
-        private SortedSet<Vector3> blocked_position_gridspace;
+        private List<Vector3> blocked_position_gridspace;
         //private
 
         private int move_offset_ = 10;
@@ -60,6 +60,7 @@ namespace Assets.Code
             //init callbacks
             e_spawn_model.init_callback();
             c_movement_model.init_callback();
+            blocked_position_gridspace = new List<Vector3>();
         }
 
         // Update is called once per frame
@@ -89,11 +90,14 @@ namespace Assets.Code
 
         public void spawn_grid_object(Vector3 spawnposition,GameObject prefab)
         {
-            if (!blocked_position_gridspace.Contains(spawnposition))
-            {
-                blocked_position_gridspace.Add(spawnposition);
-                Instantiate(prefab, spawnposition, Quaternion.identity);
-            }
+            for (int index = 0; index < blocked_position_gridspace.Count; index++)
+                if ((Vector3.Distance(spawnposition, blocked_position_gridspace[index]) < 0.05f))
+                {
+                    return;
+                }
+            
+            blocked_position_gridspace.Add(spawnposition);
+            Instantiate(prefab, spawnposition, Quaternion.identity);
         }
 
         public void remove_object_from_grid(Vector3 position)

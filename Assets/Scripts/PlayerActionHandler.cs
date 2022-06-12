@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Assets.Code;
 public class PlayerActionHandler : MonoBehaviour
 {
     public bool inAction = false;
@@ -46,7 +46,8 @@ public class PlayerActionHandler : MonoBehaviour
 
 
         if(CanPerformAction()) {
-            Instantiate(towerPrefab, placementSpot.transform.position, Quaternion.identity);
+            //Instantiate(towerPrefab, placementSpot.transform.position, Quaternion.identity);
+            GameModel.Instance.spawn_grid_object(placementSpot.transform.position, towerPrefab);
 
             ActionPerformed();
         }
