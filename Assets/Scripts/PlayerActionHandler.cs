@@ -52,15 +52,15 @@ public class PlayerActionHandler : MonoBehaviour
             ActionPerformed();
         }
 
-        if (objInContact) {
-            inAction = true;
-            animator.SetBool("inAction", true);
-            Debug.Log(objInContact.tag);
-
-
-
-            StartCoroutine(Dig(3f));
-        }
+        //if (objInContact) {
+        //    inAction = true;
+        //    animator.SetBool("inAction", true);
+        //    Debug.Log(objInContact.tag);
+        //
+        //
+        //
+        //    StartCoroutine(Dig(3f));
+        //}
 
 
     }
