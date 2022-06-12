@@ -8,6 +8,10 @@ using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] move;
+    public Sprite[] dead;
+
     public enum move_pettern
     {
         UNDEFINED = 0,
@@ -27,11 +31,13 @@ public class EnemyController : MonoBehaviour
 
     private float delta_ = 0.0f;
 
-    private float top_max = 2.25f;
+    private float animation_delta_ = 0.0f;
 
-    private float bottom_max = -4.25f;
+    private float top_max = 4;
 
-    private float range_to_next_tile_center = 0.5f;
+    private float bottom_max = -6;
+
+    public float range_to_next_tile_center = 1f;
 
     private float jump_range = 0;
 
@@ -58,6 +64,8 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         process_move_behavior();
+
+
     }
 
     public void set_move_pattern(move_pettern e)
@@ -71,6 +79,7 @@ public class EnemyController : MonoBehaviour
             move_direction.y = (Random.value > 0.5) ? -1 : 1;
             change_target_to_move();
         }
+        
     }
 
     public void set_attack_type(attack_type e)
@@ -130,7 +139,6 @@ public class EnemyController : MonoBehaviour
                 }
 
                 delta_ += Time.deltaTime;
-                Debug.Log("start " + start_pos + " end " + next_pos);
                 this.transform.position = Vector3.Lerp(start_pos, next_pos, delta_);
             }
             else if (move_behavior == move_pettern.JUMPY)

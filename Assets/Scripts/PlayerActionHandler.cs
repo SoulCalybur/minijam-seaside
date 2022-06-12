@@ -31,8 +31,6 @@ public class PlayerActionHandler : MonoBehaviour
             Debug.Log("OnTriggerEnter2D pile");
             Debug.Log(pile);
         }
-
-
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
@@ -52,26 +50,13 @@ public class PlayerActionHandler : MonoBehaviour
             ActionPerformed();
         }
 
-<<<<<<< HEAD
+
         if (objInContact) {
             //inAction = true;
             //animator.SetBool("inAction", true);
             //Debug.Log(objInContact.tag);
             //StartCoroutine(Dig(3f));
         }
-=======
-        //if (objInContact) {
-        //    inAction = true;
-        //    animator.SetBool("inAction", true);
-        //    Debug.Log(objInContact.tag);
-        //
-        //
-        //
-        //    StartCoroutine(Dig(3f));
-        //}
->>>>>>> origin/master
-
-
     }
 
     IEnumerator Dig(float timer) {

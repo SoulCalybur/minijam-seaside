@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 namespace Assets.Code
 {
@@ -8,6 +9,8 @@ namespace Assets.Code
     {
         //public
         public static GameModel Instance { get; private set; }
+
+        public Transform offset_pos;
     
         public delegate void callback();
 
@@ -28,14 +31,19 @@ namespace Assets.Code
 
         private float spawn_delta_ = 0.0f;
 
-        private int max_enemys_simultaneously = 10;
+        private int max_enemys_simultaneously = 5;
 
         private float spawn_cooldown = 5f;
+
+        private float tile_x = 1f;
+
+        private float tile_y = 1f;
 
         private EnemySpawnerModel e_spawn_model;
 
         private CameraMovementModel c_movement_model;
-        
+
+        public Grid grid;
 
         private void Awake()
         {
@@ -54,7 +62,11 @@ namespace Assets.Code
         void Start()
         {
             //create models
-            e_spawn_model = new EnemySpawnerModel(move_offset_,this.transform.position);
+
+            tile_x = grid.cellSize.x;
+            tile_y = grid.cellSize.y;
+
+            e_spawn_model = new EnemySpawnerModel(tile_y, this.transform.position);
             c_movement_model = new CameraMovementModel(move_offset_);
 
             //init callbacks
@@ -85,7 +97,7 @@ namespace Assets.Code
             EnemyController ec = go.GetComponent<EnemyController>();
         
             ec.init_values(move_speed_);
-            ec.set_move_pattern(EnemyController.move_pettern.JUMPY);
+            ec.set_move_pattern(EnemyController.move_pettern.DIAGONAL);
         }
 
         public void spawn_grid_object(Vector3 spawnposition,GameObject prefab)

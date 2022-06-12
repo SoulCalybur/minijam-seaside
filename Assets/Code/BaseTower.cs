@@ -17,6 +17,10 @@ namespace Assets.Code
         private bool can_shoot = true;
 
         public GameObject projectile;
+        public Transform projectile_spawn_transform;
+
+        public SpriteRenderer spriteRenderer;
+        public Sprite[] shot_animation;
 
         // Update is called once per frame
         void Update()
@@ -32,7 +36,8 @@ namespace Assets.Code
                 if (can_shoot)
                 {
                     can_shoot = false;
-                    Instantiate(projectile, transform.position + Vector3.right * 0.25f, Quaternion.identity);
+                    Instantiate(projectile, projectile_spawn_transform.position, Quaternion.identity);
+                    StartCoroutine(shoot());
                 }
                 else
                 {
@@ -67,6 +72,19 @@ namespace Assets.Code
                 Destroy(this.gameObject);
             }
             
+        }
+
+        IEnumerator shoot()
+        {
+            int i;
+            i = 0;
+            while (i < shot_animation.Length)
+            {
+                spriteRenderer.sprite = shot_animation[i];
+                i++;
+                yield return new WaitForSeconds(0.07f);
+                yield return 0;
+            }
         }
     }
 
