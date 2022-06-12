@@ -57,15 +57,6 @@ namespace Assets.Code
             }
         }
 
-        void FixedUpdate()
-        {
-            // Bit shift the index of the layer (8) to get a bit mask
-            // This would cast rays only against colliders in layer 8.
-            // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-
-            
-        }
-
         void OnCollisionEnter2D(Collision2D col)
         {
             if (col.collider.tag == "Enemy")
@@ -73,11 +64,20 @@ namespace Assets.Code
                 GameModel.Instance.remove_object_from_grid(this.transform.position);
                 Destroy(col.collider.gameObject);
                 Destroy(this.gameObject);
+
             }
             
         }
+        void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.tag == "water")
+            {
+                Destroy(this.gameObject);
+                Debug.Log("water");
+            }
+        }
 
-       
+
     }
 
 //collision
