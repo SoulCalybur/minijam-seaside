@@ -14,6 +14,11 @@ public class PlayerActionHandler : MonoBehaviour
 
     public GameObject towerPrefab;
 
+    public int availableActions = 3;
+    public const int MAX_ACTIONS = 3;
+
+    public HUDActions hudActions;
+    
 
     private void OnTriggerEnter2D(Collider2D collision) {
         Debug.Log("OnTriggerEnter2D");
@@ -34,14 +39,17 @@ public class PlayerActionHandler : MonoBehaviour
         objInContact = null;
         animator.SetBool("inAction", false);
         Debug.Log("OnTriggerExit2D");
-
     }
 
     public void DoAction() {
         Debug.Log("Do Action");
 
 
-        Instantiate(towerPrefab, placementSpot.transform.position, Quaternion.identity);
+        if(CanPerformAction()) {
+            Instantiate(towerPrefab, placementSpot.transform.position, Quaternion.identity);
+
+            ActionPerformed();
+        }
 
         if (objInContact) {
             inAction = true;
@@ -66,8 +74,26 @@ public class PlayerActionHandler : MonoBehaviour
             Debug.Log(countdown);
             yield return new WaitForSeconds(Time.deltaTime);
         }
+    }
 
+    void AddAction() {
+        availableActions++;
+        if (availableActions > MAX_ACTIONS) availableActions = MAX_ACTIONS;
+    }
 
+    bool CanPerformAction() {
+        if(availableActions > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    void ActionPerformed() {
+        if (availableActions > 0) {
+            availableActions--;
+
+            hudActions.SetImages(availableActions);
+        }
     }
 
     private void Update() {
@@ -75,8 +101,8 @@ public class PlayerActionHandler : MonoBehaviour
         Vector3Int cellPos = grid.WorldToCell(this.transform.position);
         Vector3 spotPos = grid.GetCellCenterWorld(cellPos);
 
-        Debug.Log(cellPos);
-        Debug.Log(spotPos);
+        // Debug.Log(cellPos);
+        // Debug.Log(spotPos);
         placementSpot.transform.position = spotPos;
 
     }
