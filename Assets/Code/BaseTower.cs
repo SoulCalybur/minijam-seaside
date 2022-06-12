@@ -18,9 +18,8 @@ namespace Assets.Code
 
         public GameObject projectile;
         public Transform projectile_spawn_transform;
-        public Animator animator;
 
-        public SpriteRenderer spriteRenderer;
+        public Animator animator;
 
         private void Start() {
             animator = GetComponent<Animator>();

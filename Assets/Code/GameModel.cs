@@ -10,8 +10,6 @@ namespace Assets.Code
         //public
         public static GameModel Instance { get; private set; }
 
-        public Transform offset_pos;
-    
         public delegate void callback();
 
         public static callback callbackFct;
@@ -31,13 +29,15 @@ namespace Assets.Code
 
         private float spawn_delta_ = 0.0f;
 
-        private int max_enemys_simultaneously = 3;
+        private int max_enemys_simultaneously = 1;
 
-        private float spawn_cooldown = 5f;
+        private float spawn_cooldown = 4f;
 
         private float tile_x = 1f;
 
         private float tile_y = 1f;
+
+        private float game_time = 0.0f;
 
         private EnemySpawnerModel e_spawn_model;
 
@@ -78,6 +78,21 @@ namespace Assets.Code
         // Update is called once per frame
         void Update()
         {
+            game_time += Time.deltaTime;
+
+            if (game_time > 30.0f)
+            {
+                if(max_enemys_simultaneously < 3)
+                    max_enemys_simultaneously++;
+
+                else
+                {
+                    spawn_cooldown -= 0.25f;
+                }
+                
+
+            }
+
             spawn_delta_ += Time.deltaTime;
 
             if (spawn_delta_ > spawn_cooldown)

@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
 
     public enum move_pettern
     {
@@ -62,8 +61,6 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         process_move_behavior();
-
-
     }
 
     public void set_move_pattern(move_pettern e)
@@ -95,9 +92,13 @@ public class EnemyController : MonoBehaviour
     {
         if (col.collider.tag == "Projectile")
         {
-            Debug.Log("destroy it");
             Destroy(col.collider.gameObject);
             Destroy(this.gameObject);
+        }
+        else if (col.collider.tag == "deathzone")
+        {
+            Destroy(this.gameObject);
+            // game over
         }
     }
 
