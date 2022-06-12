@@ -18,9 +18,13 @@ namespace Assets.Code
 
         public GameObject projectile;
         public Transform projectile_spawn_transform;
+        public Animator animator;
 
         public SpriteRenderer spriteRenderer;
-        public Sprite[] shot_animation;
+
+        private void Start() {
+            animator = GetComponent<Animator>();
+        }
 
         // Update is called once per frame
         void Update()
@@ -37,7 +41,7 @@ namespace Assets.Code
                 {
                     can_shoot = false;
                     Instantiate(projectile, projectile_spawn_transform.position, Quaternion.identity);
-                    StartCoroutine(shoot());
+                    animator.SetTrigger("Shoot");
                 }
                 else
                 {
@@ -74,18 +78,7 @@ namespace Assets.Code
             
         }
 
-        IEnumerator shoot()
-        {
-            int i;
-            i = 0;
-            while (i < shot_animation.Length)
-            {
-                spriteRenderer.sprite = shot_animation[i];
-                i++;
-                yield return new WaitForSeconds(0.07f);
-                yield return 0;
-            }
-        }
+       
     }
 
 //collision
