@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.VisualScripting;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Code
 {
@@ -25,7 +28,7 @@ namespace Assets.Code
 
         private int move_offset_ = 10;
 
-        private float move_speed_ = 0.5f;
+        private float move_speed_ = 0.35f;
 
         private float spawn_delta_ = 0.0f;
 
@@ -44,6 +47,26 @@ namespace Assets.Code
         private CameraMovementModel c_movement_model;
 
         public Grid grid;
+
+        public GameObject tilemap;
+
+        public GameObject water;
+
+        public GameObject camera;
+
+        public bool change_zone = false;
+
+       private Vector3 current_water_pos;
+    
+       private Vector3 next_water_pos;
+      
+       private Vector3 current_zone_pos;
+       
+       private Vector3 next_zone_pos;
+       
+       private Vector3 current_camera_pos;
+       
+       private Vector3 next_camera_pos;
 
         private void Awake()
         {
@@ -78,20 +101,50 @@ namespace Assets.Code
         // Update is called once per frame
         void Update()
         {
-            game_time += Time.deltaTime;
+           if(!change_zone)
+           game_time += Time.deltaTime;
+           
+           else
+           {
+               game_time += Time.deltaTime;
+           
+               if (game_time <= 1.0f)
+               {
+                   water.transform.position = Vector3.Lerp(current_water_pos, next_water_pos, game_time);
+               }
+               else if (game_time > 1.0f && game_time <=2.1f)
+               {
+                   camera.transform.position = Vector3.Lerp(current_camera_pos, next_camera_pos, game_time -1);
+               }
+               else
+               {
+                   tilemap.transform.position -= Vector3.right;
+                   this.transform.position -= Vector3.right;
+                   change_zone = false;
+               }
+           }
+           
+           if (game_time > 30.0f)
+           {
+               game_time = 0.0f;
+           
+               if (max_enemys_simultaneously < 3)
+                   max_enemys_simultaneously++;
+               else
+               {
+                   spawn_cooldown -= 0.25f;
+               }
+           
+               current_water_pos = water.transform.position;
+               next_water_pos = current_water_pos;
+               next_water_pos.x -= 1;
 
-            if (game_time > 30.0f)
-            {
-                if(max_enemys_simultaneously < 3)
-                    max_enemys_simultaneously++;
-
-                else
-                {
-                    spawn_cooldown -= 0.25f;
-                }
-                
-
-            }
+               current_camera_pos = camera.transform.position;
+               next_camera_pos = current_camera_pos;
+               next_camera_pos.x -= 1;
+               
+               change_zone = true;
+           }
 
             spawn_delta_ += Time.deltaTime;
 
@@ -112,7 +165,7 @@ namespace Assets.Code
             EnemyController ec = go.GetComponent<EnemyController>();
         
             ec.init_values(move_speed_);
-            ec.set_move_pattern(EnemyController.move_pettern.STRAIGHT);
+            ec.set_move_pattern(EnemyController.move_pettern.JUMPY);
         }
 
         public void spawn_grid_object(Vector3 spawnposition,GameObject prefab)

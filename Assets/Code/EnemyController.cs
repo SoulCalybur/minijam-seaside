@@ -30,9 +30,9 @@ public class EnemyController : MonoBehaviour
 
     private float animation_delta_ = 0.0f;
 
-    private float top_max = 4;
+    private float top_max = 4.5f;
 
-    private float bottom_max = -6;
+    private float bottom_max = -0.5f;
 
     public float range_to_next_tile_center = 1f;
 
@@ -192,8 +192,8 @@ public class EnemyController : MonoBehaviour
                         delta_ += Time.deltaTime;
 
                         float a, b, c;
-                        a = c = 0.25f;
-                        b = 1;
+                        a = c = 1f;
+                        b = 2f;
 
                         float ab = ((1f - delta_) * a) + (b * delta_);
                         float ac = ((1f - delta_) * a) + (c * delta_);

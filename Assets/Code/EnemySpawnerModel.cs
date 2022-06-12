@@ -49,7 +49,7 @@ namespace Assets.Code
 
                 av_positions.Add(lane);
 
-                Vector3 spawnpos = base_position_ + 
+                Vector3 spawnpos = GameModel.Instance.transform.position + 
                                    Vector3.up * (tile_size * lane);
 
                 if (GameModel.Instance != null)
