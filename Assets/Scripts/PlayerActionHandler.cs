@@ -6,7 +6,7 @@ public class PlayerActionHandler : MonoBehaviour
 {
     public bool inAction = false;
 
-    public GameObject objInContact;
+    public GameObject pileInContact;
     public Animator animator;
 
     public Grid grid;
@@ -22,61 +22,50 @@ public class PlayerActionHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         Debug.Log("OnTriggerEnter2D");
-        Debug.Log(collision);
 
         SandPile pile = collision.gameObject.GetComponent<SandPile>();
-        objInContact = collision.gameObject;
 
         if (pile) {
+            pileInContact = collision.gameObject;
             Debug.Log("OnTriggerEnter2D pile");
             Debug.Log(pile);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        objInContact = null;
-        animator.SetBool("inAction", false);
+        pileInContact = null;
         Debug.Log("OnTriggerExit2D");
     }
 
     public void DoAction() {
         Debug.Log("Do Action");
+        Debug.Log(pileInContact);
 
+        if (pileInContact) {
+            // trigger Action?
+            animator.SetTrigger("DigPile");
+            animator.speed = 1;
+            Destroy(pileInContact);
+            AddAction();
 
-        if(CanPerformAction()) {
-            //Instantiate(towerPrefab, placementSpot.transform.position, Quaternion.identity);
-            GameModel.Instance.spawn_grid_object(placementSpot.transform.position, towerPrefab);
+        } else {
+            if (CanPlaceTower()) {
+                GameModel.Instance.spawn_grid_object(placementSpot.transform.position, towerPrefab);
 
-            ActionPerformed();
-        }
-
-
-        if (objInContact) {
-            //inAction = true;
-            //animator.SetBool("inAction", true);
-            //Debug.Log(objInContact.tag);
-            //StartCoroutine(Dig(3f));
-        }
-    }
-
-    IEnumerator Dig(float timer) {
-
-        Debug.Log("Dig!");
-        float countdown = timer;
-
-        while (countdown > 0f) {
-            countdown -= Time.deltaTime;
-            Debug.Log(countdown);
-            yield return new WaitForSeconds(Time.deltaTime);
+                ActionPerformed();
+            }
         }
     }
+
 
     void AddAction() {
         availableActions++;
         if (availableActions > MAX_ACTIONS) availableActions = MAX_ACTIONS;
+        hudActions.SetImages(availableActions);
+
     }
 
-    bool CanPerformAction() {
+    bool CanPlaceTower() {
         if(availableActions > 0) {
             return true;
         }
