@@ -137,7 +137,7 @@ public class EnemyController : MonoBehaviour
                     change_target_to_move();
                 }
 
-                delta_ += Time.deltaTime;
+                delta_ += Time.deltaTime * speed_;
                 this.transform.position = Vector3.Lerp(start_pos, next_pos, delta_);
             }
             else if (move_behavior == move_pettern.JUMPY)
