@@ -42,6 +42,7 @@ public class PlayerActionHandler : MonoBehaviour
             animator.SetTrigger("DigPile");
             animator.speed = 1;
             Destroy(pileInContact);
+            GameModel.Instance.dec_sand_pile_counter();
             AddAction();
 
         } else {
