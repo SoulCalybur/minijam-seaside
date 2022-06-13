@@ -9044,7 +9044,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302399045}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -9056,7 +9056,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!1 &1331202273
 GameObject:
   m_ObjectHideFlags: 0
@@ -10378,6 +10378,10 @@ PrefabInstance:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 1850633870}
+    - target: {fileID: 6922330648660163463, guid: 981415a12e029994dafc600026082d05, type: 3}
+      propertyPath: sandpile
+      value: 
+      objectReference: {fileID: 4553681919308347302, guid: dedc68be4afc34043927d578fabbe365, type: 3}
     - target: {fileID: 6922330648660163463, guid: 981415a12e029994dafc600026082d05, type: 3}
       propertyPath: m_Enabled
       value: 1

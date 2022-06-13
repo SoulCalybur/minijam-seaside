@@ -73,7 +73,6 @@ namespace Assets.Code
             if (col.tag == "water")
             {
                 Destroy(this.gameObject);
-                Debug.Log("water");
             }
         }
 
