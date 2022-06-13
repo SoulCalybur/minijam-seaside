@@ -5,6 +5,7 @@ using System.Numerics;
 using Unity.VisualScripting;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Code
 {
@@ -90,7 +91,7 @@ namespace Assets.Code
 
        private int more_movement = 0;
 
-
+        public GameObject GameOverScreen;
 
         private void Awake()
         {
@@ -281,6 +282,12 @@ namespace Assets.Code
         {
             if(sand_piles > 0)
                 sand_piles--;
+        }
+
+        public void showGameOver() {
+            if(GameOverScreen.gameObject.activeSelf == false) {
+                GameOverScreen.gameObject.SetActive(true);
+            }
         }
     }
 }

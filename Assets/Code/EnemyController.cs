@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
+using Assets.Code;
+
 public class EnemyController : MonoBehaviour
 {
 
@@ -103,6 +105,8 @@ public class EnemyController : MonoBehaviour
         {
             Destroy(this.gameObject);
             // game over
+            GameModel.Instance.showGameOver();
+            Debug.Log("Game Over");
         }
     }
 

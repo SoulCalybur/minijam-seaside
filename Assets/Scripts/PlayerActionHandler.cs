@@ -21,20 +21,16 @@ public class PlayerActionHandler : MonoBehaviour
     
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        Debug.Log("OnTriggerEnter2D");
 
         SandPile pile = collision.gameObject.GetComponent<SandPile>();
 
         if (pile) {
             pileInContact = collision.gameObject;
-            Debug.Log("OnTriggerEnter2D pile");
-            Debug.Log(pile);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         pileInContact = null;
-        Debug.Log("OnTriggerExit2D");
     }
 
     public void DoAction() {
