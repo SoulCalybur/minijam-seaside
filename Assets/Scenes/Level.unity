@@ -10126,6 +10126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6601757235768023811, guid: 63d3529f327d9cc4690ab96be9489ba3, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8238457501465707693, guid: 63d3529f327d9cc4690ab96be9489ba3, type: 3}
       propertyPath: grid
       value: 
